@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votación de Candidatos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            background-color: #2a40bb;
+            color: white;
+            text-align: center;
+            padding: 5px 0;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .candidato {
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .candidato img {
+            width: 450px;
+            height: 350px;
+            border-radius: 30%;
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+
+        .boton-votar {
+            background-color: #27087a;
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            cursor: pointer;
+            font-size: 36px;
+            border-radius: 55px;
+        }
+
+        .boton-votar:hover {
+            background-color: #45a049;
+        }
+
+        .resultados {
+            background-color: #6a7de6;
+            margin-top: 40px;
+            font-size: 27px;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Votación de Candidatos</h1>
+        <h2>Reina de Cisadde Murillo 2025</h2>
+    </header>
+
+    <main>
+        <div id="candidatos"></div>
+        <div id="resultados" class="resultados"></div>
+    </main>
+
+    <footer>
+        <p>© 2025 Sistema de Votación por Jose Gomez</p>
+    </footer>
+
+    <script>
+        // Lista de candidatos con sus datos iniciales
+        const candidatos = [
+            { id: 1, nombre: "Vanessa Vital(Fono)", foto: "vanesa.jpg", votos: 0 },
+            { id: 2, nombre: "Digna Garcia(Psico)", foto: "digna.jpg", votos: 0 },
+            { id: 3, nombre: "Angie Macdiels(Fono)", foto: "https://via.placeholder.com/150", votos: 0 },
+            { id: 4, nombre: "Isabella Monterroza(psico)", foto: "isabel.jpg", votos: 0 },
+            { id: 5, nombre: "Maria Jose(Fisio)", foto: "mariaj.jpg", votos: 0 },
+            { id: 6, nombre: "Karen Camacho(Fono)", foto: "karen.jpg", votos: 0 },
+            { id: 7, nombre: "Jennifer Blanco(Psico)", foto: "jennifer.jpg", votos: 0 },
+            { id: 8, nombre: "Soret(Fono)", foto: "soret.jpg", votos: 0 }
+        ];
+
+        // Mostrar los candidatos en la página
+        function mostrarCandidatos() {
+            const contenedor = document.getElementById("candidatos");
+            contenedor.innerHTML = "";
+
+            candidatos.forEach((candidato) => {
+                contenedor.innerHTML += `
+                    <div class="candidato">
+                        <img src="${candidato.foto}" alt="${candidato.nombre}">
+                        <h3>${candidato.nombre}</h3>
+                        <button class="boton-votar" onclick="votar(${candidato.id})">Votar</button>
+                    </div>
+                `;
+            });
+        }
+
+        // Actualizar resultados de votos y porcentajes
+        function mostrarResultados() {
+            const totalVotos = candidatos.reduce((acc, candidato) => acc + candidato.votos, 0);
+            const contenedorResultados = document.getElementById("resultados");
+            contenedorResultados.innerHTML = "<h2>Resultados:</h2>";
+
+            candidatos.forEach((candidato) => {
+                const porcentaje = totalVotos > 0 ? ((candidato.votos / totalVotos) * 100).toFixed(2) : 0;
+                contenedorResultados.innerHTML += `
+                    <p>${candidato.nombre}: ${porcentaje}% (${candidato.votos} votos)</p>
+                `;
+            });
+        }
+
+        // Incrementar votos al hacer clic en un candidato
+        function votar(id) {
+            const candidato = candidatos.find((c) => c.id === id);
+            if (candidato) {
+                candidato.votos++;
+                mostrarResultados(); // Actualizar resultados inmediatamente
+            }
+        }
+
+        // Inicializar la página
+        mostrarCandidatos();
+        mostrarResultados();
+    </script>
+</body>
+</html>
