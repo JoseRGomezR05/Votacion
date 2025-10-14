@@ -1,2 +1,2 @@
-# Votacion
-Votacion reyna del carnaval
+# Diapositiva
+Diapositiva
